@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: parameter-service-demo
+  datasource:
+    url: jdbc:h2:mem:parameter;DB_CLOSE_DELAY=-1
+    username: parameter_db
+    password: parameter_db
+    driver-class-name: org.h2.Driver
+  flyway:
+    locations: classpath:migration
+springdoc:
+  swagger-ui:
+    path: /swagger
