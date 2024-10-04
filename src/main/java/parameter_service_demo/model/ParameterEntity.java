@@ -9,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @Table("parameter")
@@ -26,4 +28,11 @@ public class ParameterEntity {
 
     @Column("value_")
     private String value;
+
+    @Column("active_from")
+    private LocalDate activeFrom;
+
+    public boolean isActive() {
+        return activeFrom != null;
+    }
 }
