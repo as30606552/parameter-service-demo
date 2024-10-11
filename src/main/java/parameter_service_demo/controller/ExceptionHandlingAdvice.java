@@ -13,6 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import parameter_service_demo.dto.ErrorDto;
 import parameter_service_demo.dto.ValidationErrorDto;
 import parameter_service_demo.exception.EntityNotFoundException;
+import parameter_service_demo.exception.ImmutableParameterChangeException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ExceptionHandlingAdvice {
         return buildErrorResponse(HttpStatus.NOT_FOUND, request.getRequestURI(), e.getMessage());
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class, ImmutableParameterChangeException.class})
     public ResponseEntity<ErrorDto> handleBadRequestException(Exception e, HttpServletRequest request) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST, request.getRequestURI(), e.getMessage());
     }
