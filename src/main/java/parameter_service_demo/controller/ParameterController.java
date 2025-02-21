@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,6 +24,9 @@ import parameter_service_demo.dto.NewParameterDto;
 import parameter_service_demo.dto.ParameterDto;
 import parameter_service_demo.dto.ValidationErrorDto;
 import parameter_service_demo.service.ParameterService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -97,5 +101,17 @@ public class ParameterController {
     )
     public void deleteParameterById(@PathVariable Long id) {
         parameterService.deleteById(id);
+    }
+
+    @PostMapping("activate/{name}")
+    @Operation(summary = "Activates (locks) a parameter with ID provided in the path.")
+    @ApiResponse(responseCode = "200", description = "Parameter activated successfully.")
+    @ApiResponse(
+            responseCode = "400",
+            description = "Parameter is already activated.",
+            content = @Content(schema = @Schema(implementation = ErrorDto.class))
+    )
+    public List<ParameterDto> activateByName(@PathVariable String name, @RequestParam LocalDate activationDate) {
+        return parameterService.activateByName(name, activationDate);
     }
 }
